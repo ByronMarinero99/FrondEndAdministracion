@@ -1,0 +1,93 @@
+﻿@page "/juego/eliminar/{id:int}"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject ILocalStorageService _localStorageService
+
+<MudText Typo="Typo.h2" Class="ml">Eliminar juego</MudText>
+
+<MudGrid>
+    <MudItem xs="12" sm="7">
+        <MudPaper Class="pa-4">
+            <EditForm Model="juego" OnValidSubmit="OnValidSubmit">
+                <DataAnnotationsValidator />
+                <MudCard>
+                    <MudCardContent>
+                        <MudTextField Label="Titulo" @bind-Value="juego.Titulo" For="@(() => juego.Titulo)" />
+                        <MudTextField Label="Titulo" @bind-Value="juego.Img" For="@(() => juego.Img)" />
+                        <MudTextField Label="Titulo" @bind-Value="juego.Nombre" For="@(() => juego.Nombre)" />
+                        <MudTextField Label="Titulo" @bind-Value="juego.Plataforma" For="@(() => juego.Plataforma)" />
+                        <MudTextField Label="Titulo" @bind-Value="juego.Genero" For="@(() => juego.Genero)" />
+                        <MudTextField Label="Titulo" @bind-Value="juego.Formato" For="@(() => juego.Formato)" />
+                        <MudTextField Label="Titulo" @bind-Value="juego.size" For="@(() => juego.size)" />
+                        <MudTextField Label="Titulo" @bind-Value="juego.Fecha" For="@(() => juego.Fecha)" />
+                        <MudTextField Label="Titulo" @bind-Value="juego.Version" For="@(() => juego.Version)" />
+                        <MudSelect Variant="Variant.Outlined" Label="genero" AnchorOrigin="Origin.BottomCenter"
+                        @bind-Value="juego.TipoGenerosId" For="@(() => juego.TipoGenerosId)">
+                            @foreach (var item in juegos)
+                            {
+                                <MudSelectItem Value="@item.Id">@item.Nombre</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Error" Class="ml-auto">Eliminar</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </EditForm>
+            @if (showLeaveAlert)
+            {
+                <MudAlert Severity="Severity.Error" ContentAlignment="HorizontalAlignment.Center" ShowCloseIcon="true" CloseIconClicked="(() => CloseMe(true))">Ocurrió un problema.</MudAlert>
+            }
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    private IEnumerable<Juego> juegos = new List<Juego>();
+    private bool showLeaveAlert = false;
+    Juego juego = new Juego();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Http.DefaultRequestHeaders.Authorization =
+        new AuthenticationHeaderValue("Bearer", await _localStorageService.GetItemAsync<string>("token"));
+        await getJuego();
+
+        var resp = await Http.GetStringAsync("juego/" + id);
+        juego = JsonSerializer.Deserialize<Juego>(resp, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+    }
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        await eliminar();
+    }
+
+    private async Task eliminar()
+    {
+        var httpResponse = await Http.DeleteAsync("juego/" + juego.Id);
+
+        if (!(httpResponse.StatusCode == System.Net.HttpStatusCode.OK))
+        {
+            showLeaveAlert = true;
+        }
+        else
+        {
+            NavigationManager.NavigateTo("juego/index");
+        }
+    }
+
+    private void CloseMe(bool value)
+    {
+        showLeaveAlert = false;
+    }
+
+    private async Task getJuego()
+    {
+        var httpResponse = await Http.GetStringAsync("juego");
+        juegos = JsonSerializer.Deserialize<IEnumerable<Juego>>(httpResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+    }
+}
+

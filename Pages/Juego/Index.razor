@@ -1,0 +1,72 @@
+﻿@page "/juego/index"
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+
+<MudText Typo="Typo.h2" Class="ml">Juegos</MudText>
+
+<MudTable Items="@juegos" Hover="true" Bordered="true" Striped="true">
+    <ToolBarContent>
+        <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="goAdd" />
+        <MudSpacer />
+        <MudTextField @bind-Value="searchText" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Id</MudTh>
+        <MudTh>Titulo</MudTh>
+        <MudTh>Genero ID</MudTh>
+        <MudTh>Imagen</MudTh>
+        <MudTh>Nombre</MudTh>
+        <MudTh>Plataforma</MudTh>
+        <MudTh>Genero</MudTh>
+        <MudTh>Formato</MudTh>
+        <MudTh>size</MudTh>
+        <MudTh>Fecha</MudTh>
+        <MudTh>Version</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Nombre">@context.Titulo</MudTd>
+        <MudTd DataLabel="Nombre">@context.TipoGenero.Tipo</MudTd>
+        <MudTd DataLabel="Departamento">@context.Img</MudTd>
+        <MudTd DataLabel="Descripcion">@context.Nombre</MudTd>
+        <MudTd DataLabel="Descripcion">@context.Plataforma</MudTd>
+        <MudTd DataLabel="Descripcion">@context.Genero</MudTd>
+        <MudTd DataLabel="Descripcion">@context.Formato</MudTd>
+        <MudTd DataLabel="Descripcion">@context.size</MudTd>
+        <MudTd DataLabel="Descripcion">@context.Fecha</MudTd>
+        <MudTd DataLabel="Descripcion">@context.Version</MudTd>
+        <MudTd>
+            <MudButton Link="@($"/municipio/editar/{context.Id}")" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Tertiary"
+                       Class="text-center">Editar</MudButton>
+            <MudButton Link="@($"/municipio/eliminar/{context.Id}")" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Warning"
+                       Class="text-center">Eliminar</MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+
+@code {
+    private IEnumerable<Juego> juegos = new List<Juego>();
+    private string searchText = "";
+    private Juego juego = new Juego();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await getAll();
+    }
+
+    private async Task getAll()
+    {
+        var httpResponse = await httpClient.PostAsJsonAsync("juego/buscar", juego);
+        string respString = await httpResponse.Content.ReadAsStringAsync();
+        juegos = JsonSerializer.Deserialize<IEnumerable<Juego>>(respString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+    }
+
+    private void goAdd()
+    {
+        NavigationManager.NavigateTo("juego/agregar");
+    }
+}

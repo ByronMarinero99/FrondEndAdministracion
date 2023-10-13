@@ -25,20 +25,20 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Id">@context.Id</MudTd>
-        <MudTd DataLabel="Nombre">@context.Titulo</MudTd>
+        <MudTd DataLabel="Titulo">@context.Titulo</MudTd>
         <MudTd DataLabel="Nombre">@context.TipoGenero.Tipo</MudTd>
-        <MudTd DataLabel="Departamento">@context.Img</MudTd>
-        <MudTd DataLabel="Descripcion">@context.Nombre</MudTd>
-        <MudTd DataLabel="Descripcion">@context.Plataforma</MudTd>
-        <MudTd DataLabel="Descripcion">@context.Genero</MudTd>
-        <MudTd DataLabel="Descripcion">@context.Formato</MudTd>
-        <MudTd DataLabel="Descripcion">@context.size</MudTd>
-        <MudTd DataLabel="Descripcion">@context.Fecha</MudTd>
-        <MudTd DataLabel="Descripcion">@context.Version</MudTd>
+        <MudTd DataLabel="img">@context.Img</MudTd>
+        <MudTd DataLabel="Nombre">@context.Nombre</MudTd>
+        <MudTd DataLabel="Plataforma">@context.Plataforma</MudTd>
+        <MudTd DataLabel="Genero">@context.Genero</MudTd>
+        <MudTd DataLabel="Formato">@context.Formato</MudTd>
+        <MudTd DataLabel="size">@context.size</MudTd>
+        <MudTd DataLabel="Fecha">@context.Fecha</MudTd>
+        <MudTd DataLabel="Version">@context.Version</MudTd>
         <MudTd>
-            <MudButton Link="@($"/municipio/editar/{context.Id}")" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Tertiary"
+            <MudButton Link="@($"/juego/editar/{context.Id}")" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Tertiary"
                        Class="text-center">Editar</MudButton>
-            <MudButton Link="@($"/municipio/eliminar/{context.Id}")" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Warning"
+            <MudButton Link="@($"/juego/eliminar/{context.Id}")" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Warning"
                        Class="text-center">Eliminar</MudButton>
         </MudTd>
     </RowTemplate>
@@ -60,7 +60,7 @@
 
     private async Task getAll()
     {
-        var httpResponse = await httpClient.PostAsJsonAsync("juego/buscar", juego);
+        var httpResponse = await httpClient.PostAsJsonAsync("CaracteristicasGame/buscar", juego);
         string respString = await httpResponse.Content.ReadAsStringAsync();
         juegos = JsonSerializer.Deserialize<IEnumerable<Juego>>(respString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }

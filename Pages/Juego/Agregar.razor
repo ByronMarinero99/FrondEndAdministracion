@@ -24,9 +24,9 @@
 
                         <MudSelect Variant="Variant.Outlined" Label="genero" AnchorOrigin="Origin.BottomCenter"
                         @bind-Value="juego.TipoGenerosId" For="@(() => juego.TipoGenerosId)">
-                            @foreach (var item in juegos)
+                            @foreach (var item in categorias)
                             {
-                                <MudSelectItem Value="@item.Id">@item.TipoGenero</MudSelectItem>
+                                <MudSelectItem Value="@item.Id">@item.Tipo</MudSelectItem>
                             }
                         </MudSelect>
                     </MudCardContent>
@@ -44,7 +44,7 @@
 </MudGrid>
 
 @code {
-    private IEnumerable<Juego> juegos = new List<Juego>();
+    private IEnumerable<Categoria> categorias = new List<Categoria>();
     private bool showLeaveAlert = false;
     Juego juego = new Juego();
 
@@ -52,7 +52,7 @@
     {
         Http.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", await _localStorageService.GetItemAsync<string>("token"));
-        await getJuego();
+        await getCategorias();
     }
 
     private async Task OnValidSubmit(EditContext context)
@@ -62,7 +62,7 @@
 
     private async Task save()
     {
-        var httpResponse = await Http.PostAsJsonAsync<Juego>("juego", juego);
+        var httpResponse = await Http.PostAsJsonAsync<Juego>("CaracteristicasGame", juego);
 
         if (!(httpResponse.StatusCode == System.Net.HttpStatusCode.OK))
         {
@@ -79,9 +79,9 @@
         showLeaveAlert = false;
     }
 
-    private async Task getJuego()
+    private async Task getCategorias()
     {
-        var httpResponse = await Http.GetStringAsync("juego");
-        juegos = JsonSerializer.Deserialize<IEnumerable<Juego>>(httpResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        var httpResponse = await Http.GetStringAsync("TipoGenero");
+        categorias = JsonSerializer.Deserialize<IEnumerable<Categoria>>(httpResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 }

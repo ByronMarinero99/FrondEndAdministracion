@@ -8,19 +8,12 @@
 <MudGrid>
     <MudItem xs="12" sm="7">
         <MudPaper Class="pa-4">
-            <EditForm Model="depto" OnValidSubmit="OnValidSubmit">
+            <EditForm Model="categoria" OnValidSubmit="OnValidSubmit">
                 <DataAnnotationsValidator />
                 <MudCard>
                     <MudCardContent>
-                        <MudTextField Label="Nombre" @bind-Value="depto.Nombre" For="@(() => depto.Nombre)" />
+                        <MudTextField Label="Nombre" @bind-Value="categoria.Tipo" For="@(() => categoria.Tipo)" />
                         <MudDivider />
-@*                         <MudSelect Variant="Variant.Outlined" Label="Zona" AnchorOrigin="Origin.BottomCenter"
-                        @bind-Value="depto.Zona" For="@(() => depto.Zona)">
-                            <MudSelectItem Value="1">Accion</MudSelectItem>
-                            <MudSelectItem Value="2">Aventura</MudSelectItem>
-                            <MudSelectItem Value="3">Carrera</MudSelectItem>
-                            <MudSelectItem Value="4">Deportes</MudSelectItem>
-                        </MudSelect> *@
                     </MudCardContent>
                     <MudCardActions>
                         <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Guardar cambios</MudButton>
@@ -39,15 +32,15 @@
     [Parameter]
     public int id { get; set; }
     private bool showLeaveAlert = false;
-    Departamento depto = new Departamento();
+    Categoria categoria = new Categoria();
 
     protected override async Task OnInitializedAsync()
     {
         Http.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", await _localStorageService.GetItemAsync<string>("token"));
 
-        var resp = await Http.GetStringAsync("departamento/" + id);
-        depto = JsonSerializer.Deserialize<Departamento>(resp, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        var resp = await Http.GetStringAsync("TipoGenero/" + id);
+        categoria = JsonSerializer.Deserialize<Categoria>(resp, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 
     private async Task OnValidSubmit(EditContext context)
@@ -58,7 +51,7 @@
     private async Task saveChanges()
     {
 
-        var httpResponse = await Http.PutAsJsonAsync<Departamento>("departamento/" + depto.Id, depto);
+        var httpResponse = await Http.PutAsJsonAsync<Categoria>("TipoGenero/" + categoria.Id, categoria);
 
         if (!(httpResponse.StatusCode == System.Net.HttpStatusCode.OK))
         {
@@ -66,7 +59,7 @@
         }
         else
         {
-            NavigationManager.NavigateTo("departamento/index");
+            NavigationManager.NavigateTo("categoria/index");
         }
     }
 

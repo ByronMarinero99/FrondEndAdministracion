@@ -40,7 +40,7 @@
 
     private async Task getAll()
     {
-        var httpResponse = await httpClient.GetStringAsync("departamento");
+        var httpResponse = await httpClient.GetStringAsync("TipoGenero");
         categorias = JsonSerializer.Deserialize<IEnumerable<Categoria>>(httpResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 

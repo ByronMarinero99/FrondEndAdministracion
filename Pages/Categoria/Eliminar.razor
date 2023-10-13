@@ -46,7 +46,7 @@
         Http.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", await _localStorageService.GetItemAsync<string>("token"));
 
-        var resp = await Http.GetStringAsync("categoria/" + id);
+        var resp = await Http.GetStringAsync("TipoGenero/" + id);
         categoria = JsonSerializer.Deserialize<Categoria>(resp, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 
@@ -58,7 +58,7 @@
     private async Task eliminar()
     {
 
-        var httpResponse = await Http.DeleteAsync("departamento/" + categoria.Id);
+        var httpResponse = await Http.DeleteAsync("TipoGenero/" + categoria.Id);
 
         if (!(httpResponse.StatusCode == System.Net.HttpStatusCode.OK))
         {

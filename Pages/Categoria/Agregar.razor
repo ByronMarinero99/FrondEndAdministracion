@@ -1,4 +1,4 @@
-﻿@page "/Categoria/agregar"
+﻿@page "/categoria/agregar"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @inject ILocalStorageService _localStorageService
@@ -12,15 +12,8 @@
                 <DataAnnotationsValidator />
                 <MudCard>
                     <MudCardContent>
-                         <MudTextField Label="Nombre" @bind-Value="categoria.Tipo" For="@(() => categoria.Tipo)" /> 
+                         <MudTextField Label="Tipo" @bind-Value="categoria.Tipo" For="@(() => categoria.Tipo)" /> 
                         <MudDivider />
-@*                         <MudSelect Variant="Variant.Outlined" Label="tipo" AnchorOrigin="Origin.BottomCenter"
-                        @bind-Value="categoria.Tipo" For="@(() => categoria.Tipo)">
-                            <MudSelectItem Value="1">Accion</MudSelectItem>
-                            <MudSelectItem Value="2">Aventura</MudSelectItem>
-                            <MudSelectItem Value="3">Carrera</MudSelectItem>
-                            <MudSelectItem Value="4">Deportes</MudSelectItem>
-                        </MudSelect> *@
                     </MudCardContent>
                     <MudCardActions>
                         <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Guardar</MudButton>
@@ -36,7 +29,6 @@
 </MudGrid>
 
 @code {
-    private IEnumerable<Categoria> departamentos = new List<Categoria>();
     private bool showLeaveAlert = false;
     Categoria categoria = new Categoria();
 
@@ -44,7 +36,6 @@
     {
         Http.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", await _localStorageService.GetItemAsync<string>("token"));
-        await getCategoria();
     }
 
     private async Task OnValidSubmit(EditContext context)
@@ -54,7 +45,8 @@
 
     private async Task save()
     {
-        var httpResponse = await Http.PostAsJsonAsync<Categoria>("municipio", categoria);
+
+        var httpResponse = await Http.PostAsJsonAsync<Categoria>("TipoGenero", categoria);
 
         if (!(httpResponse.StatusCode == System.Net.HttpStatusCode.OK))
         {
@@ -69,11 +61,5 @@
     private void CloseMe(bool value)
     {
         showLeaveAlert = false;
-    }
-
-    private async Task getCategoria()
-    {
-        var httpResponse = await Http.GetStringAsync("categoria");
-        departamentos = JsonSerializer.Deserialize<IEnumerable<Categoria>>(httpResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 }

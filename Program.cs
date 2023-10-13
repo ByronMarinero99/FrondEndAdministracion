@@ -19,6 +19,6 @@ builder.Services.AddAuthorizationCore();
 
 //localstorage
 builder.Services.AddBlazoredLocalStorage();
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7243/api/") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7062/api/") });
 
 await builder.Build().RunAsync();

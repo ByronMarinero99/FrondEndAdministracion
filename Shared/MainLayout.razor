@@ -5,7 +5,7 @@
 <MudThemeProvider />
 <MudDialogProvider />
 
-<MudLayout>
+@* <MudLayout>
     <MudAppBar Elevation="1">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudText Typo="Typo.h5" Class="ml-3">Administración</MudText>
@@ -16,12 +16,47 @@
         <NavMenu></NavMenu>
     </MudDrawer>
     <MudMainContent>
-        <MudContainer Class="pa-4">
+        <MudContainer Class="m-0" >
             @Body
         </MudContainer>
 
     </MudMainContent>
-</MudLayout>
+</MudLayout> *@
+
+
+<header class="text-gray-600 body-font">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <MudImage ObjectFit="ObjectFit.Contain" Src="/images/byrongames.png" Width="30" Height="20" Alt="Swedish Farm House" Elevation="0" Class="rounded-lg mt-4" />
+            <span class="ml-3 text-xl">GameHub | Administracion</span>
+        </a>
+        <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+            <a Href="/home" Icon="@Icons.Material.Filled.Home" class="mr-5 hover:text-gray-900">Inicio</a>
+            <a Href="/rol/index" Icon="@Icons.Material.Filled.PersonPin" class="mr-5 hover:text-gray-900">Roles</a>
+            <a Href="/usuario/index" Icon="@Icons.Material.Filled.PeopleAlt" class="mr-5 hover:text-gray-900">Usuarios</a>
+            <a Href="/juego/index" Icon="@Icons.Material.Filled.VideogameAsset" class="mr-5 hover:text-gray-900">Juegos</a>
+            <a Href="/categoria/index" Icon="@Icons.Material.Filled.Category" class="mr-5 hover:text-gray-900">Categorias</a>
+        </nav>
+        <button>
+            <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" Edge="Edge.End" OnClick="@((e) => logout())" />
+        </button>
+    </div>
+</header>
+
+<div class="bg-white">
+    <div class="p-4">
+        <!-- Contenido del cajón -->
+        <NavMenu></NavMenu>
+    </div>
+</div>
+
+<div class="bg-white">
+    <div class="p-4">
+        <!-- Contenido principal -->
+        @Body
+    </div>
+</div>
+
 @code {
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }

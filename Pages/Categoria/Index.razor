@@ -10,6 +10,8 @@
         <MudSpacer />
         <MudTextField @bind-Value="searchText" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
+
+
     <HeaderContent>
         <MudTh>Id</MudTh>
         <MudTh>Tipo</MudTh>
@@ -24,10 +26,14 @@
                        Class="text-center">Eliminar</MudButton>
         </MudTd>
     </RowTemplate>
+
     <PagerContent>
         <MudTablePager />
     </PagerContent>
 </MudTable>
+
+
+
 
 @code {
     private IEnumerable<Categoria> categorias = new List<Categoria>();

@@ -5,32 +5,7 @@
 @inject ILocalStorageService _localStorageService
 @inject HttpClient Http
 
-@* <MudImage ObjectFit="ObjectFit.Contain" Src="/images/fullcolor.png" Width="200" Height="150" Alt="Swedish Farm House" Elevation="0" Class="rounded-lg ma-4" />
-<MudPaper Class="pa-2 ma-4" Elevation="0">
-    <EditForm Model="@user" OnValidSubmit="OnValidSubmit">
-        <DataAnnotationsValidator />
-        <MudGrid>
-            <MudItem xs="12">
-                <MudTextField Label="Usuario" Class="mt-3"
-                @bind-Value="user.Login" For="@(() => user.Login)" />
-            </MudItem>
-            <MudItem xs="12">
-                <MudTextField Label="Clave" Class="mt-3"
-                @bind-Value="user.Password" For="@(() => user.Password)" InputType="InputType.Password" />
-            </MudItem>
-            <MudItem xs="12">
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Login</MudButton>
-            </MudItem>
-        </MudGrid>
-    </EditForm>
-    @if (showLeaveAlert)
-    {
-        <MudAlert Severity="Severity.Error" ContentAlignment="HorizontalAlignment.Center" ShowCloseIcon="true" CloseIconClicked="(() => CloseMe(true))">No se reconocen las credenciales ingresadas.</MudAlert>
-    }
-</MudPaper> *@
-
-
-<div class="relative h-screen">
+<div >
     <!-- Fondo con imagen y desenfoque -->
     <div class="absolute inset-0 z-0 bg-black blur-2" style="background-image: url('/images/fondo.png'); background-size: cover; background-position: center;">
         <div class="absolute inset-0 bg-black opacity-75"></div> <!-- Fondo oscuro -->
@@ -56,13 +31,13 @@
                     </div>
 
                     <div class="relative mb-4">
-                        <label for="full-name" class="leading-7 text-sm text-red-800 text-white"></label>
+                        <label class="leading-7 text-sm text-red-800 text-white"></label>
                         <MudItem>
                             <MudTextField Label="Usuario" Class="mt-3 text-red-800" @bind-Value="user.Login" For="@(() => user.Login)" />
                         </MudItem>
                     </div>
                     <div class="relative mb-4">
-                        <label for "email" class="leading-7 text-sm text-red-800 text-white"></label>
+                        <label class="leading-7 text-sm text-red-800 text-white"></label>
                         <MudItem>
                             <MudTextField Label="Password" Class="mt-3 text-red-800" @bind-Value="user.Password" For="@(() => user.Password)" InputType="InputType.Password" />
                         </MudItem>

@@ -13,7 +13,7 @@
     <HeaderContent>
         <MudTh>Id</MudTh>
         <MudTh>Titulo</MudTh>
-        <MudTh>Genero ID</MudTh>
+        @* <MudTh>Genero ID</MudTh> *@
         <MudTh>Imagen</MudTh>
         <MudTh>Nombre</MudTh>
         <MudTh>Plataforma</MudTh>
@@ -26,7 +26,7 @@
     <RowTemplate>
         <MudTd DataLabel="Id">@context.Id</MudTd>
         <MudTd DataLabel="Titulo">@context.Titulo</MudTd>
-        <MudTd DataLabel="Nombre">@context.TipoGenero.Tipo</MudTd>
+        @* <MudTd DataLabel="Nombre">@context.TipoGenero.Tipo</MudTd> *@
         <MudTd DataLabel="img">@context.Img</MudTd>
         <MudTd DataLabel="Nombre">@context.Nombre</MudTd>
         <MudTd DataLabel="Plataforma">@context.Plataforma</MudTd>

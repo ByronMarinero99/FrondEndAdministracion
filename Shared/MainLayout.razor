@@ -5,24 +5,6 @@
 <MudThemeProvider />
 <MudDialogProvider />
 
-@* <MudLayout>
-    <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudText Typo="Typo.h5" Class="ml-3">Administración</MudText>
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" Edge="Edge.End" OnClick="@((e) => logout())" />
-    </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-        <NavMenu></NavMenu>
-    </MudDrawer>
-    <MudMainContent>
-        <MudContainer Class="m-0" >
-            @Body
-        </MudContainer>
-
-    </MudMainContent>
-</MudLayout> *@
-
 
 <header class="text-gray-600 body-font">
     <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -44,12 +26,7 @@
     </div>
 </header>
 
-<div class="bg-white">
-    <div class="p-4">
-        <!-- Contenido del cajón -->
-        <NavMenu></NavMenu>
-    </div>
-</div>
+
 
 <div class="bg-white">
     <div class="p-4">

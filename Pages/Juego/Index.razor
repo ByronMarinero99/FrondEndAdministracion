@@ -10,6 +10,7 @@
         <MudSpacer />
         <MudTextField @bind-Value="searchText" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
+
     <HeaderContent>
         <MudTh>Id</MudTh>
         <MudTh>Titulo</MudTh>
@@ -42,10 +43,38 @@
                        Class="text-center">Eliminar</MudButton>
         </MudTd>
     </RowTemplate>
+
     <PagerContent>
         <MudTablePager />
     </PagerContent>
 </MudTable>
+
+<MudGrid >
+    @foreach (var item in juegos)
+    {
+        <MudCard xs="12" sm="6" md="4" lg="3">
+            <MudCardMedia Image="@item.Img" Height="200" />
+            <MudCardContent>
+                <MudText Typo="Typo.h5">Old Paint</MudText>
+                <MudText Typo="Typo.body2">@item.Titulo</MudText>
+                <MudText Typo="Typo.body2">@item.Plataforma</MudText>
+                <MudText Typo="Typo.body2">@item.Genero</MudText>
+                <MudText Typo="Typo.body2">@item.Formato</MudText>
+                <MudText Typo="Typo.body2">@item.size</MudText>
+                <MudText Typo="Typo.body2">@item.Fecha</MudText>
+                <MudText Typo="Typo.body2">@item.Version</MudText>
+            </MudCardContent>
+            <MudCardActions>
+
+                <MudButton Link="@($"/juego/editar/{item.Id}")" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Tertiary"
+                           Class="text-center">Editar</MudButton>
+                <MudButton Link="@($"/juego/eliminar/{item.Id}")" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Warning"
+                           Class="text-center">Eliminar</MudButton>
+            </MudCardActions>
+        </MudCard>
+    }
+</MudGrid>
+
 
 
 @code {
